@@ -28,41 +28,23 @@
 	\maketitle
 	
 	\section{Introduction}
-	One interesting task in machine learning is labeling over complex and structured objects. Many applications such as image segmentation, motif finding and noun-phrase parsing involved with representing jointly correlated variables. Encoding consistency constraints over large number of cliques, for example, is central to the problem of image segmentation. Algorithm frameworks like Markov Random Field (MRF) containing higher order energy functions and max margin method for Structural SVM are raising interests recently due to their capability of representing structural dependencies of variables and ensuring computationally feasible approximate or exact inference. \\
-	Higher order potentials can be optimized efficiently using modern Linear Programming frameworks. For example, Kohli and Kumar\cite{kohli2009robust} developed lower linear envelope potentials by introducing auxiliary variables and reduce the potential function to a pairwise formulation. Thus the formulation can be optimized using LP programming. However, they only provide an approximate routine for the problem.\\ Another powerful algorithm called “graph-cuts” which can do exact inference on binary MRFs with internal submodular potentials was well studied in past years. Gould\cite{gouldlearning} extended the previous research via graph-cuts to do an exact inference using weighted lower linear envelope potentials and optimized the model parameters within a max-margin learning framework. However, the approximation used in their work leading to a fixed spaced break-points lower linear envelope. If the equally spaced constraint can be removed, their formulation will result in a latent SVM.\\
-	In practical, many information providing useful cues for prediction is not directly observable from data. For motif (repeated patterns in DNA sequences) finding problem, as an example, the task if to find motifs from a set of DNA sequences where the location of these motifs are unknown. Thus the information of position can be treated as hidden variable and is important to be considered in the model though it is not directly observable. \\
-	The same problem raises in computer vision when learning a model from images lacking of additional annotated information. Issues like this have been long studied by many researchers and latent SVMs, which can explicitly model hidden variables with joint feature vectors, outperforms many other methods. \\
-	The latent SVM was developed by Felzenszwalb et al.\cite{felzenszwalb2008discriminatively} and Yu and Joachims\cite{yu2009learning} independently in different ways. The main idea is introducing a latent variable to extend the feature vector, which results in a generalized user defined loss function, e.g. Hinge Loss, with an upper bound. Then the optimization was done by using Concave-Convex Procedure (CCCP) algorithm.\\
-	In this project, our goal is to study the relationship between the algorithm proposed in \cite{gouldlearning} and latent SVM framework. The main challenge is how to relax the fixed space constraint and find an auxiliary variable independent approximation of the lower linear envelope. We will experiment our algorithm on Weizmann Horse dataset\cite{borenstein2002class}\cite{borenstein2008combined}. Other extensions may also be studied, e.g. extending the loss function\cite{pletscher2012learning}.
+	One interesting task in machine learning is labeling over complex and structured objects. Many applications such as image segmentation, motif finding and noun-phrase parsing involved with representing jointly correlated variables. Encoding consistency constraints over large number of cliques, for example, is central to the problem of image segmentation. Algorithm frameworks like Markov Random Field (MRF) containing higher order energy functions and max margin method for Structural SVM are raising interests recently due to their capability of representing structural dependencies of variables and ensuring computationally feasible approximate. \\
+	Lower linear envelope potentials is one of higher order energy functions defined on MRF which becomes popular due to their ability to encode consistency relationship between labels in clique. Gould\cite{gouldlearning} investigated the submodularity of lower linear envelope potentials and developed a graph-cuts algorithm to perform exact inference on them. Then they proposed a Max-Margin framework to optimize potentials' parameters. However, in order to write the energy function into a linear combination, they sampled the lower linear envelope potentials using a set of fixed space points. Althought this formulation can be globally optimized by using the Max-Margin framework, it lost a rich class of representations of energy function due to the fixed space sampling. Removing the equally spaced constraint and introduce their auxiliary variables back will result in a latent SVM formulation.\\
+	In practical, many information providing useful cues for prediction is not directly observable from data. For motif (repeated patterns in DNA sequences) finding problem, as an example, the task if to find motifs from a set of DNA sequences where the location of these motifs are unknown. Thus the information of position can be treated as hidden variable and is important to be considered in the model though it is not directly observable. Issues like this have been well studied by many researchers and latent SVMs, which can explicitly model hidden variables with joint feature vectors, outperforms many other methods. \\
+	The latent SVM was developed by Felzenszwalb et al.\cite{felzenszwalb2008discriminatively} and Yu and Joachims\cite{yu2009learning} independently in different ways. The main idea is introducing a latent variable to extend the feature vector, which results in an arbitrary loss function, e.g. Hinge Loss, with an upper bound. Then the optimization was done by using Concave-Convex Procedure (CCCP) algorithm.\\
+	In this project, our goal is to extend previous research\cite{gouldlearning} and optimize the weighted lower linear envelope potentials using latent SVM framework. We introduced the auxiliary variables back and rewrite it into a linear combination of weights and features. We will first experiment our algorithm on synthetic data. 
 
-	\section{Literature Review}
-	Learning structural objects from unknown probability distribution is becoming popular in recent years. Tsochantaridis et al.\cite{tsochantaridis2005large} generalized multiclass SVMs\cite{crammer2002algorithmic} to structural SVMs by extending feature vectors to joint feature vectors which map features extracted jointly over input-output pairs to discrete output. The exact maximum a posteriori (MAP) problem thus becomes an NP-hard problem. They overcome this by using a method called “Soft-Margin Maximization” and found an upper bound of the loss function.\\
+	\subsection{Literature Review}
+	Learning structural objects from unknown probability distribution is becoming popular in recent years. Tsochantaridis et al.\cite{tsochantaridis2005large} generalized multiclass SVMs\cite{crammer2002algorithmic} to structural SVMs by extending feature vectors to joint feature vectors which map features extracted jointly over input-output pairs to discrete output. The exact maximum a posteriori (MAP) problem thus becomes an NP-hard problem. They overcome this by generalize the hard margin into "soft" margin and found an upper bound of arbitrary loss functions under this formulation.\\
 	Based on the previous research, Yu and Joachims\cite{yu2009learning} developed latent SVM by introducing a hidden variable into the joint feature vector. They observed a fact that in real world applications hidden variables are usually intermediate results and are not required as an output. With this fact they followed “Soft-Margin” method and found an upper bound for the loss function with latent variables. However, the resulted object function is still non-convex.\\
-	Yuille and Rangarajan \cite{yuille2002concave} developed the Concave-Convex Procedure (CCCP) which is guaranteed to find a local minimum for a Difference-Convex (DC) program. Yu and Joachims\cite{yu2009learning} combined CCCP algorithm by writing their non-convex object function into a difference of two convex function and came up with a EM like 2 steps optimizing algorithm. For each iteration, they first compute latent variables utilizing current parameter vectors and then in turn optimizing parameter vectors using the standard Structural SVM algorithm with previously computed latent variables. \\
-	Higher order potentials are raising interests due to their capability to represent dependencies between complex objects. Kohli and Kumar\cite{kohli2009robust} proposed a method to represent a class of higher order potentials with lower (upper) linear envelope potentials. By introducing auxiliary variables, they reduced the linear representation to a pairwise form and proposed an approximate algorithm with standard LP program methods. Following their routine, Gould\cite{gouldlearning} extended their method to a weighted lower linear envelope in binary Markov Random Fields (MRF) which can be solved with an efficient algorithm. They showed the energy function with auxiliary variables is submodular by transforming it into a quadratic pseudo-Boolean form and how “graph-cuts” like algorithm can be applied to do exact inference. They then optimized the model’s parameters under the max margin framework\cite{tsochantaridis2005large}. \\
-	In their work they pointed out the potential relationship between their auxiliary representation and latent SVM\cite{yu2009learning}. However, since removing of their fixed space constraint will result dependence between latent variable and parameters, further research still remains open.
-
-
-
+	Yuille and Rangarajan \cite{yuille2002concave} developed the Concave-Convex Procedure (CCCP) which is guaranteed to find a local minimum for a Difference-Convex (DC) program. Yu and Joachims\cite{yu2009learning} combined CCCP algorithm by writing their non-convex object function into a difference of two convex functions and came up with an EM like 2 steps optimizing algorithm. For each iteration, they first compute latent variables utilizing current parameter vectors and then in turn optimizing parameter vectors using the standard Structural SVM algorithm with previously computed latent variables. \\
+	Higher order potentials are raising interests due to their capability to represent dependencies between complex objects. Kohli and Kumar\cite{kohli2009robust} proposed a method to represent a class of higher order potentials with lower (upper) linear envelope potentials. By introducing auxiliary variables, they reduced the linear representation to a pairwise form and proposed an approximate algorithm with standard linear programming methods. Following their routine, Gould\cite{gouldlearning} extended their method to a weighted lower linear envelope in binary Markov Random Fields (MRF) which can be solved with an efficient algorithm. They showed the energy function with auxiliary variables is submodular by transforming it into a quadratic pseudo-Boolean form and how “graph-cuts” like algorithm can be applied to do exact inference. They then optimized the model’s parameters under the max margin framework\cite{tsochantaridis2005large}. \\
+	In their work they pointed out the potential relationship between their auxiliary representation and latent SVM\cite{yu2009learning}. However, since removing of their fixed space constraint will result dependence between latent variable and parameters, further research still remains open.\\
+	This report will study the latent variable formulation of their energy function and optimize it using latent SVM framework. The rest of report is organized as follows: Section 2 gives a briefly introduction of Latent Structural SVM. Section 3 presents the formulation of weighted lower linear envelope potential and its most important properties. Section 4 describes the linear combination formulation of the energy function and how to optimize it using latent structural SVM. Section 5 discusses its performance on synthetic data.
 	
-	
-	\section{Proposal}
-	
-	\subsection{Background}
-		\subsubsection{Structured SVM with latent variables}
-		Suppose we have a combined feature function $\Psi(\mathbf{x},\mathbf{y}) $ defined on a sample set $S=\{ ( \mathbf{x}_1,\mathbf{y}_1) ,\dots ,( \mathbf{x}_n,\mathbf{y}_n ) \} \in (\mathcal{X}\times \mathcal{Y})^n$ describes the relationship between input $\mathbf{x}$ and structured output $\mathbf{y}$. $ \mathbf{x}_i$ denots the $i$th sample and $\mathbf{y}_i$ denotes its structured label vector. The Structured SVM approach \cite{tsochantaridis2005large} is to maximize a linear discriminant function $\mathcal{F} : \mathcal{X} \times \mathcal{Y} \rightarrow \mathbb{R} $ for a given input $\mathbf{x}_i$ to derive the structured label $\mathbf{y}_i$
-		
-		$$ f_w(x) = \argmax_{\mathbf{y}\in\mathcal{Y}} F_w(\mathbf{x},\mathbf{y})$$
-		Since $\mathcal{F}$ is linear, we can rewrite this as
-		$$ f_w(x) = \argmax_{\mathbf{y}\in\mathcal{Y}} w\cdot\Psi(\mathbf{x},\mathbf{y})$$
-		The task of finding the $y^* \in \argmax_{\mathbf{y}\in\mathcal{Y}} w\cdot\Psi(\mathbf{x},\mathbf{y})$ is called 'Inference'.
-		\\\\
-		An arbitrary loss function $\Delta(\mathbf{y},\hat{\mathbf{y}}) : \mathcal{Y}\times\mathcal{Y}\rightarrow\mathbb{R}
-		$ is usde to quantify the loss associated with the prediction $\mathbf{\hat{y}}$ and the true output vector $\mathbf{y}$. $\Delta$ is non-negative. $\Delta = 0$ when $\mathbf{y} = \mathbf{\hat{y}}$ and $\Delta > 0$ for other cases. Suppose a finite training set $S=\{ ( \mathbf{x}_1,\mathbf{y}_1) ,\dots ,( \mathbf{x}_n,\mathbf{y}_n ) \}$ is generated according to a fixed but unobserved distribution $P(\mathbf{x},\mathbf{y})$, our function can be learnt through minimizing the loss on the training sample $S$
-		$$
-		R^\Delta_S(f_w) = \frac{1}{n}\sum_{i=1}^{n}\Delta(\mathbf{y}_i,f_w(\mathbf{x}_i))
-		$$
-		To include unobserved information in the model, Yu\cite{yu2009learning} extended the joint feature function  $\Psi(\mathbf{x},\mathbf{y}) $ with a latent variable $\mathbf{h}\in \mathcal{H}$ to $\Psi(\mathbf{x},\mathbf{y},\mathbf{h}) $. So the inference problem becomes
+
+	\section{Latent Structural SVMs}
+		To include unobserved information in the model, Yu\cite{yu2009learning} extended the joint feature function\cite{tsochantaridis2005large}  $\Psi(\mathbf{x},\mathbf{y}) $ with a latent variable $\mathbf{h}\in \mathcal{H}$ to $\Psi(\mathbf{x},\mathbf{y},\mathbf{h}) $. So the inference problem becomes
 		$$
 		f_w(x) = \argmax_{(\mathbf{y} \times \mathbf{h}) \in \mathcal{Y} \times \mathcal{H}} w\cdot\Psi(\mathbf{x},\mathbf{y},\mathbf{h})
 		$$
@@ -77,22 +59,26 @@
 		$$
 		(\mathbf{\hat{y}}_i(w),\mathbf{\hat{h}}_i(w))=\argmax_{(\mathbf{y} \times \mathbf{h}) \in \mathcal{Y} \times \mathcal{H}} w\cdot\Psi(\mathbf{x}_i,\mathbf{y},\mathbf{h})
 		$$
-		Yu\cite{yu2009learning} proved that the extended loss has an upper bound
+		However, under this formulation the ``loss augmented inference'' used in Structral SVMs\cite{tsochantaridis2005large} to remove the complexity cannot be performed due to the dependence of loss function $\Delta$ on hidden variables $\mathbf{h}^*_i(w)$. Yu argued that in real world applications hidden variables are usually intermediate results and are not required as an output\cite{yu2009learning}. Therefore, the loss function can only focus on the inferenced hidden variables $\mathbf{\hat{h}}_i(w)$ which leads to:
+		$$
+		\Delta((\mathbf{y}_i,\mathbf{h}^*_i(w)),(\mathbf{\hat{y}}_i(w),\mathbf{\hat{h}}_i(w))) = \Delta(\mathbf{y}_i,\mathbf{\hat{y}}_i(w),\mathbf{\hat{h}}_i(w))
+		$$
+		Thus the upper bound used in structural SVMs can be written as:
 		\begin{align*}
 			\Delta((\mathbf{y}_i,\mathbf{h}^*_i(w)),(\mathbf{\hat{y}}_i(w),\mathbf{\hat{h}}_i(w)))
-			&\leq\\
-			&\bigg(\max_{(\mathbf{\hat{y}} \times \mathbf{\hat{h}}) \in \mathcal{Y} \times \mathcal{H}} [w\cdot\Psi(\mathbf{x}_i,\mathbf{\hat{y}},\mathbf{\hat{h}}) + \Delta(\mathbf{y}_i,\mathbf{\hat{y}},\mathbf{\hat{h}})]\bigg)\\
+			&\leq \bigg(\max_{(\mathbf{\hat{y}} \times \mathbf{\hat{h}}) \in \mathcal{Y} \times \mathcal{H}} [w\cdot\Psi(\mathbf{x}_i,\mathbf{\hat{y}},\mathbf{\hat{h}}) + \Delta(\mathbf{y}_i,\mathbf{\hat{y}},\mathbf{\hat{h}})]\bigg)\\
 			&-\max_{\mathbf{h} \in \mathcal{H}} w \cdot \Psi(\mathbf{x}_i,\mathbf{y}_i,\mathbf{h})
 		\end{align*}
 		Hence the optimization problem for Structural SVMs with latent variables becomes
 		\begin{align*}
-			\min_w\bigg[\frac{1}{2}\|w\|^2+
-			C\sum_{i=1}^{n}\big(\max_{(\mathbf{\hat{y}} \times \mathbf{\hat{h}}) \in \mathcal{Y} \times \mathcal{H}} [w\cdot\Psi(\mathbf{x}_i,\mathbf{\hat{y}},\mathbf{\hat{h}}) + \Delta(\mathbf{y}_i,\mathbf{\hat{y}},\mathbf{\hat{h}})]\big)\\
-			-C\sum_{i=1}^{n}\big(\max_{\mathbf{h} \in \mathcal{H}} w \cdot \Psi(\mathbf{x}_i,\mathbf{y}_i,\mathbf{h})\big)\bigg]
+			\min_w\bigg(\frac{1}{2}\|w\|^2+
+			C\sum_{i=1}^{n}\big(\max_{(\mathbf{\hat{y}} \times \mathbf{\hat{h}}) \in \mathcal{Y} \times \mathcal{H}} [w\cdot\Psi(\mathbf{x}_i,\mathbf{\hat{y}},\mathbf{\hat{h}}) + \Delta(\mathbf{y}_i,\mathbf{\hat{y}},\mathbf{\hat{h}})]\big)\bigg)\\
+			-C\sum_{i=1}^{n}\big(\max_{\mathbf{h} \in \mathcal{H}} w \cdot \Psi(\mathbf{x}_i,\mathbf{y}_i,\mathbf{h})\big)
 		\end{align*}
+		Observing that the former equation is a difference of two convex functions, therefore the redefined objective function can be optimized locally using CCCP algorithm.
 		
 
-		\subsubsection{Weighted Lower Linear Envelope and Large Margin Optimization}
+		\section{Weighted Lower Linear Envelope Potentials}
 		Suppose we have a binary MRFs $\mathbf{y}=\{y_1,\dots,y_n\}$, $y_i\in\{0,1\}$. A higher-order potential $\psi_c^H(\mathbf{y}_c)$ is an arbitrary function defined on cliques $\mathbf{y}_c=\{y_i : i\in c\}$ where $c\subseteq\{1,\dots,n\}$. Gould\cite{gouldlearning} proposed it with a weighted lower linear envelope potential expression
 		\begin{align}
 		\psi_c^H(\mathbf{y}_c) \triangleq \min_{k=1,\dots,K}\bigg\{a_kW_c(\mathbf{y}_c)+b_k\bigg\}
@@ -146,8 +132,6 @@
 		\end{aligned}
 		\right.
 		\end{equation*}
-
-	\subsection{Extensions}
 
 
 	\section{Milestones}
