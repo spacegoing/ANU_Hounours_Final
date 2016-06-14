@@ -87,33 +87,39 @@
 		$$
 		W_c(\mathbf{y}_c) = \sum_{i\in c}^{}w_i^cy_i
 		$$
-		where c is a clique. $w_i^c$ is a per-variable non-negative weights for every nodes in each clique and satisfies $\sum_ {i\in c}^{}w_i^c=1$.\\\\
-		Gould\cite{gouldlearning} introduced a non-negative linear parameter vector $\boldsymbol{\theta}\in\mathbb{R}^K$ and a feature map $\boldsymbol{\phi}(\mathbf{y})\in \mathbb{R}^K$ 
-		\begin{equation*}
-		\theta_k = \left\{
-		\begin{aligned}
-		& b_1	& \text{for} \ k=0\\
-		& a_1 & \text{for}\ k=1\\
-		& a_{k-1}-a_k  & \text{for} \ k=2,\dots,K\\
-		\end{aligned}
-		\right.
-		\end{equation*}
-		\begin{equation*}
-		\phi_k = \left\{
-		\begin{aligned}
-		& 1	& \text{for} \ k=0\\
-		& W(\mathbf{y}) & \text{for}\ k=1\\
-		& \bigg(\frac{k-1}{K}-W(\mathbf{y}) \bigg)\bigg[\bigg[ W(\mathbf{y}) > \frac{k-1}{K}\bigg]\bigg]  & \text{for} \ k=2,\dots,K\\
-		\end{aligned}
-		\right.
-		\end{equation*}
-		to rewrite the Equation 1 into a linear formulation
+		where c is a clique. $w_i^c$ is a per-variable non-negative weights for every nodes in each clique and satisfies $\sum_ {i\in c}^{}w_i^c=1$.\\
+		In the literature they explored many important properties of lower linear envelope. They proved that by maitaining the order of variables $a_k$ and $b_k$, the encoding is ensured free of redundant linear functions (Proposition 3.1\cite{gouldlearning}):
 		\begin{align}
-		\psi_c^H(\mathbf{y}_c)=\boldsymbol{\theta}^T\boldsymbol{\phi}(\mathbf{y})
+		a_k > a_{k+1}\\
+		b_k < b_{k+1}
 		\end{align}
-		where $ D\boldsymbol{\theta}\geq \mathbf{0}$. Hence the Equation 2 can be optimized using max-margin framework with an additional linear constraint.
+		Another important property is that the inferenced assignment $y^*$ is irrelevant of arbitrarily shifting the piece-wise functions set up or down. Let $ \tilde{\psi}_c^H(y_c) = \min_{k=1,\dots,K}{a_kW_c(y_c)+b_k+b^{const}}$. We can get:
+		$$
+		arg\min_{y_c}{\psi_c^H(y_c)}=arg\min_{y_c}{\tilde{\psi}_c^H(y_c)}
+		$$
+		Therefore, we can shift arbitrary envelope to zero:
+		\begin{align}
+		b_1 = 0
+		\end{align}
+		From equation (3) we know that variable $b_k$ maintaining increasing order, thus $b_k>0$ when $k>1$.\\
+		To help with exact inference on the envelope, Gould\cite{gouldlearning} rewrite it into a quadratic pseudo-Boolean function by introducing $K-1$ auxiliary binary variables $\mathbf{z} = {z_1,\dots,z_K-1}$:
+		\begin{align}
+		E^c(y_c,z)=a_1W_c(y_c)+b_1+\sum_{k=1}^{K-1}z_k((a_{k+1}-a_k)W_c(y_c)+b_{k+1}-b_k)
+		\end{align}
+		It is worth to notice that as long as we maintain the linear constraints on variables $a_k$ and $b_k$, the following constraint is automatically satisfied (Observation 3.6\cite{gouldlearning}):
+		\begin{align}
+		z_{k+1}\le z_k
+		\end{align}
+		In the literature they also proved the submodularity of equation (5) and proposed a graph-cuts method to perform the exact inference on it. Our work is based on these results.
 		
-		\begin{equation*}
+		\section{Optimizing Lower Linear Envelope Using Latent Structural SVMs}
+		To optimize the energy function using latent structral SVMs, it first requires us write the equation (5) into a linear combination of weights and feature vector. In order to help with the formulation, we first define $k^* = \argmax_{k=1,\dots,K-1} \big[\big[z_{k}\big]\big]$. We also notice that the equation (5) can be rewrite as an inner product of two vectors ($b_1=0$ according to equation  (4)):
+		\begin{align*}
+		E^c(y_c,z)&=a_1W_c(y_c)+b_1+\sum_{k=1}^{K-1}z_k((a_{k+1}-a_k)W_c(y_c)+b_{k+1}-b_k)\\
+		&=a_1W_c(y_c)+\sum_{k=1}^{K-1}(a_{k+1}-a_k)z_kW_c(y_c)+\sum_{k=1}^{K-1}(b_{k+1}-b_k)z_k
+		\end{align*}
+		We can reparameterized the energy function as $E^c(y_c,z)=\mathbf{w}\mathbf{\phi}$ where:
+		\begin{equation}
 			w_i = \left\{
 			\begin{aligned}
 				& a_1	& \text{for} \ i=1\\
@@ -121,9 +127,9 @@
 				& b_{i+1-K}-b_{i-K} & \text{for} \ K<i\le2K-1\\
 			\end{aligned}
 			\right.
-		\end{equation*}
+		\end{equation}
 		
-		\begin{equation*}
+		\begin{equation}
 		\phi_i = \left\{
 		\begin{aligned}
 		& W(\mathbf{y}) 	& \text{for} \ i=1\\
@@ -131,11 +137,16 @@
 		& z_{i-K}\bigg[\bigg[ i\le k^*\bigg]\bigg]  & \text{for} \ K<i\le2K-1\\
 		\end{aligned}
 		\right.
-		\end{equation*}
+		\end{equation}
+		Thus our inference problem becomes:
+		$$
+		(\mathbf{\hat{y}}_i(w),\mathbf{\hat{h}}_i(w))=\argmax_{(\mathbf{y} \times \mathbf{h}) \in \mathcal{Y} \times \mathcal{H}} w\cdot\Psi(\mathbf{y},\mathbf{h})
+		$$
+		$$
+		\mathbf{h}^*_i(w) = \argmax_{\mathbf{h} \in \mathcal{H}} w \cdot \Psi(\mathbf{y}_i,\mathbf{h})
+		$$
+		We can perform the graph-cuts algorithm proposed by Gould\cite{gouldlearning} on both equations. For the later one we simply use the ground-truth labels $y_i$ as function input. Together with linear constraints (2) and (3), we can optimize the energy function using latent SVMs.
 
-
-	\section{Milestones}
-	
 	\renewcommand\refname{Bibliography}
 	\bibliographystyle{ieeetr}
 	\bibliography{draft}
