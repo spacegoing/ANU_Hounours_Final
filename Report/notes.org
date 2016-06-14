@@ -1,0 +1,25 @@
+* Introduction
+
+** Linear Envelope
+ + 1relatedwork-gould:
+    Models containing higher order factors are able to en- code complex
+  dependencies between groups of vari- ables, and can encourage
+  solutions which match the statistics of the ground truth solution
+  (Potetz, 2007; Roth & Black, 2005; Woodford et al., 2009). However,
+  the high computational cost of performing MAP infer- ence in such
+  models has inhibited their use (Lan et al., 2006). Instead, there has
+  been a widespread adoption of the simpler and less powerful
+  pairwise-CRF models which allow efficient inference (Szeliski et al.,
+  2008).
+  While learning the parameters of models with insuffi- cient
+  expressivity, researchers can penalize certain mis- representations of
+  the solution space using a ‘loss func- tion’ which specifies the
+  deviations from ground truth that the learning algorithm should avoid
+  (Tsochan- taridis et al., 2005; Taskar et al., 2003). Most previ- ous
+  works on these topics have used simple choices of the loss function,
+  such as the Hamming loss or squared loss, which lead to tractable
+  learning algo- rithms (Szummer et al., 2008). However, in real world
+  applications, researchers might prefer more general loss functions
+  which penalize deviations in some higher order statistics.
+
+ + 

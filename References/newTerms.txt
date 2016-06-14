@@ -1,0 +1,8 @@
+quadratic
+bivalent
+cardinality
+concave
+auxiliary
+submodular f(A+e)-f(A) >= f(B+e)-f(B)
+flip
+curvature

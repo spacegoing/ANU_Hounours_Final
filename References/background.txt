@@ -1,0 +1,14 @@
+Lower Linear Envelope Potentials 17
+
+14 15 33
+Transform higher order 
+multi-label energy functions into 
+quadratic pseudo-boolean functions 
+
+Under 11 13 conditions, can be minimized
+
+max marging framework 36, 37,38
+survey 16
+
+CV application: encoding consistency constraints:
+19, 26, 28

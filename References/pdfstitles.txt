@@ -1,0 +1,44 @@
+Max-margin Learning for Lower Linear Envelope Potentials in Binary Markov Random Fields
+Learning Weighted Lower Linear Envelope Potentials in Binary Markov Random Fields
+PhD Thesis: Knowledge-Based Image Segmentation Using Sparse Shape Priors and High-Order MRFs
+A Framework for Efficient Structured Max-Margin Learning of High-Order MRF Models
+A Framework for Efficient Structured Max-Margin Learning of High-Order MRF Models
+Exploring Compositional High Order Pattern Potentials for Structured Output Learning
+SOME NETWORK FLOW PROBLEMS SOLVED WITH PSEUDO-BOOLEAN PROGRAMMING
+What Energy Functions Can Be Minimized via Graph Cuts?
+Slides: Pseudo-Boolean Optimization: in memory of P.L. Hammer
+The Concave-Convex Procedure (CCCP)
+Learning Structural SVMs with Latent Variables
+A Discriminatively Trained, Multiscale, Deformable Part Model
+Practical Bayesian Optimization of Machine Learning Algorithms
+Max-Margin Min-Entropy Models
+Book: Structured Learning and Prediction in Computer Vision
+Hidden Part Models for Human Action Recognition: Probabilistic vs. Max-Margin
+Learning Structured Prediction Models: A Large Margin Approach
+Support Vector Machine Learning for Interdependent and Structured Output Spaces
+Large Margin Methods for Structured and Interdependent Output Variables
+Learning Structural SVMs with Latent Variables
+Kernel Depedency Estimation
+Thesis: LEARNING STRUCTURED PREDICTION MODELS: A LARGE MARGIN APPROACH
+Multi-Class Support Vector Machines
+Cutting-Plane Training of Structural SVMs
+Learning CRFs using Graph Cuts
+Support Vector Machine Learning for Interdependent and Structured Output Spaces
+On the Algorithmic Implementation of Multiclass Kernel-based Vector Machines
+NYU Slieds: Probablistic Models￼
+Markov Random Field modeling, inference & learning in computer vision & image understanding: A survey 
+Energy Minimization for Linear Envelope MRFs
+P3 & Beyond: Solving Energies with Higher Order Cliques
+Pseudo-Bound Optimization for Binary Energies
+Learning Low-order Models for Enforcing High-order Statistics
+Fast Exact Inference for Recursive Cardinality Models
+Exploring Compositional High Order Pattern Potentials for Structured Output Learning
+Tighter Linear Program Relaxations for High Order Graphical Models
+高阶马尔科夫随机场及其在场景理解中的应用
+On MAP inference by MWSS on Perfect Graphs
+Structured Output Learning With High Order Loss Functions
+
+
+
+
+
