@@ -118,7 +118,7 @@
 		E^c(y_c,z)&=a_1W_c(y_c)+b_1+\sum_{k=1}^{K-1}z_k((a_{k+1}-a_k)W_c(y_c)+b_{k+1}-b_k)\\
 		&=a_1W_c(y_c)+\sum_{k=1}^{K-1}(a_{k+1}-a_k)z_kW_c(y_c)+\sum_{k=1}^{K-1}(b_{k+1}-b_k)z_k
 		\end{align*}
-		We can reparameterized the energy function as $E^c(y_c,z)=\mathbf{w}\mathbf{\phi}$ where:
+		One thing to notice is that $z_{k^*+1}=0$. From equation (6) we know that $z_k = 1$ from $k=1$ to $k=k^*$ and all variables $z_k$ after $k^*$ are $0$s. We can reparameterized the energy function as $E^c(y_c,z)=\mathbf{w}\mathbf{\phi}$ where:
 		\begin{equation}
 			w_i = \left\{
 			\begin{aligned}
@@ -133,17 +133,17 @@
 		\phi_i = \left\{
 		\begin{aligned}
 		& W(\mathbf{y}) 	& \text{for} \ i=1\\
-		& z_{i-1}W(\mathbf{y})\bigg[\bigg[i\le k^*\bigg]\bigg] & \text{for}\ 1<i\le i\\
-		& z_{i-K}\bigg[\bigg[ i\le k^*\bigg]\bigg]  & \text{for} \ K<i\le2K-1\\
+		& W(\mathbf{y})\bigg[\bigg[i\le k^*\bigg]\bigg] & \text{for}\ 1<i\le i\\
+		& \bigg[\bigg[ i\le k^*\bigg]\bigg]  & \text{for} \ K<i\le2K-1\\
 		\end{aligned}
 		\right.
 		\end{equation}
 		Thus our inference problem becomes:
 		$$
-		(\mathbf{\hat{y}}_i(w),\mathbf{\hat{h}}_i(w))=\argmax_{(\mathbf{y} \times \mathbf{h}) \in \mathcal{Y} \times \mathcal{H}} w\cdot\Psi(\mathbf{y},\mathbf{h})
+		(\mathbf{\hat{y}}_i(w),\mathbf{\hat{z}}_i(w))=\argmax_{(\mathbf{y} \times \mathbf{z}) \in \mathcal{Y} \times \mathcal{Z}} w\cdot\Psi(\mathbf{y},\mathbf{z})
 		$$
 		$$
-		\mathbf{h}^*_i(w) = \argmax_{\mathbf{h} \in \mathcal{H}} w \cdot \Psi(\mathbf{y}_i,\mathbf{h})
+		\mathbf{z}^*_i(w) = \argmax_{\mathbf{z} \in \mathcal{Z}} w \cdot \Psi(\mathbf{y}_i,\mathbf{z})
 		$$
 		We can perform the graph-cuts algorithm proposed by Gould\cite{gouldlearning} on both equations. For the later one we simply use the ground-truth labels $y_i$ as function input. Together with linear constraints (2) and (3), we can optimize the energy function using latent SVMs.
 
