@@ -11,7 +11,7 @@ a_{k+1}x+b_{k+1}&>a_{k}x + b_k
 a_k&>a_{k+1}\\
 b_k&<b_{k+1}
 
-E(y) = \sum{\psi_i^U(y_i)}+\sum{\psi_{i,j}^P(y_i,y_j)} + \sum_{c \in C}{\psi_i^H(y_c)}
+E(y) = \sum{\psi_i^U(y_i)}+\sum{\psi_{i,j}^P(y_i,y_j)} + \sum_{c \in C}{\psi_c^H(y_c)}
 
 E^c(y_c,z)=&a_1W_c(y_c)+b_1\\
 &+\sum_{k=1}^{K-1}z_k((a_{k+1}-a_k)W_c(y_c)+b_{k+1}-b_k)
