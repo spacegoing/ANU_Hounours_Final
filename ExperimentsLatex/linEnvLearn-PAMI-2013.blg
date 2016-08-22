@@ -1,0 +1,52 @@
+This is BibTeX, Version 0.99d (TeX Live 2015)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: linEnvLearn-PAMI-2013.aux
+The style file: abbrvnat.bst
+Database file #1: long.bib
+Database file #2: scene.bib
+Repeated entry---line 1942 of file scene.bib
+ : @inproceedings{Rother:SIGGRAPH04
+ :                                 ,
+I'm skipping whatever remains of this entry
+You've used 39 entries,
+            2773 wiz_defined-function locations,
+            839 strings with 11543 characters,
+and the built_in function-call counts, 16632 in all, are:
+= -- 1388
+> -- 965
+< -- 23
++ -- 327
+- -- 288
+* -- 1227
+:= -- 2540
+add.period$ -- 116
+call.type$ -- 39
+change.case$ -- 212
+chr.to.int$ -- 39
+cite$ -- 78
+duplicate$ -- 854
+empty$ -- 1522
+format.name$ -- 357
+if$ -- 3511
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 39
+newline$ -- 202
+num.names$ -- 156
+pop$ -- 511
+preamble$ -- 1
+purify$ -- 174
+quote$ -- 0
+skip$ -- 591
+stack$ -- 0
+substring$ -- 365
+swap$ -- 62
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 419
+warning$ -- 0
+while$ -- 139
+width$ -- 0
+write$ -- 485
+(There was 1 error message)

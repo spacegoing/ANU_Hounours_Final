@@ -1,0 +1,253 @@
+\begin{thebibliography}{39}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bertsekas(2004)]{Bertsekas:2004}
+D.~P. Bertsekas.
+\newblock \emph{Nonlinear Programming}.
+\newblock Athena Scientific, 2004.
+
+\bibitem[Borenstein and Ullman(2002)]{Borenstein:ECCV02}
+E.~Borenstein and S.~Ullman.
+\newblock Class-specific, top-down segmentation.
+\newblock In \emph{Proc.~of the European Conference on Computer Vision
+  ({ECCV})}, 2002.
+
+\bibitem[Borenstein et~al.(2004)Borenstein, Sharon, and
+  Ullman]{Borenstein:CVPR04}
+E.~Borenstein, E.~Sharon, and S.~Ullman.
+\newblock Combining top-down and bottom-up segmentation.
+\newblock In \emph{Proc.~of the {IEEE} Conference on Computer Vision and
+  Pattern Recognition ({CVPR})}, 2004.
+
+\bibitem[Boros and Hammer(2002)]{Boros:MATH02}
+E.~Boros and P.~L. Hammer.
+\newblock Pseudo-boolean optimization.
+\newblock \emph{Discrete Applied Mathematics}, 123:\penalty0 155--225, 2002.
+
+\bibitem[Boykov and Kolmogorov(2004)]{Boykov:PAMI04}
+Y.~Boykov and V.~Kolmogorov.
+\newblock An experimental comparison of min-cut/max-flow algorithms for energy
+  minimization in vision.
+\newblock \emph{{IEEE} Trans.~on Pattern Analysis and Machine Intelligence
+  ({PAMI})}, 26:\penalty0 1124--1137, 2004.
+
+\bibitem[Boykov et~al.(1999)Boykov, Veksler, and Zabih]{Boykov:ICCV99}
+Y.~Boykov, O.~Veksler, and R.~Zabih.
+\newblock Fast approximate energy minimization via graph cuts.
+\newblock In \emph{Proc.~of the International Conference on Computer Vision
+  ({ICCV})}, 1999.
+
+\bibitem[Carreira et~al.(2012)Carreira, Caseiro, Batista, and
+  Sminchisescu]{Carreira:ECCV12}
+J.~Carreira, R.~Caseiro, J.~Batista, and C.~Sminchisescu.
+\newblock Semantic segmentation with second-order pooling.
+\newblock In \emph{Proc.~of the European Conference on Computer Vision
+  ({ECCV})}, 2012.
+
+\bibitem[Comaniciu and Meer(2002)]{Comaniciu:PAMI02}
+D.~Comaniciu and P.~Meer.
+\newblock Mean shift: A robust approach toward feature space analysis.
+\newblock \emph{{IEEE} Trans.~on Pattern Analysis and Machine Intelligence
+  ({PAMI})}, 24:\penalty0 603--619, 2002.
+
+\bibitem[Everingham et~al.(2012)Everingham, Van~Gool, Williams, Winn, and
+  Zisserman]{PASCAL:VOC:2012}
+M.~Everingham, L.~Van~Gool, C.~K.~I. Williams, J.~Winn, and A.~Zisserman.
+\newblock The {PASCAL} {V}isual {O}bject {C}lasses {C}hallenge 2010 {(VOC2010)}
+  {R}esults, 2012.
+
+\bibitem[Finley and Joachims(2008)]{Finley:ICML08}
+T.~Finley and T.~Joachims.
+\newblock Training structural {SVMs} when exact inference is intractable.
+\newblock In \emph{Proc.~of the International Conference on Machine Learning
+  ({ICML})}, 2008.
+
+\bibitem[Freedman and Drineas(2005)]{Freedman:CVPR05}
+D.~Freedman and P.~Drineas.
+\newblock Energy minimization via graph cuts: Settling what is possible.
+\newblock In \emph{Proc.~of the {IEEE} Conference on Computer Vision and
+  Pattern Recognition ({CVPR})}, 2005.
+
+\bibitem[Gould(2011)]{Gould:ICML2011}
+S.~Gould.
+\newblock Max-margin learning for lower linear envelope potentials in binary
+  {M}arkov random fields.
+\newblock In \emph{Proc.~of the International Conference on Machine Learning
+  ({ICML})}, 2011.
+
+\bibitem[Hammer(1965)]{Hammer:1965}
+P.~L. Hammer.
+\newblock Some network flow problems solved with psuedo-boolean programming.
+\newblock \emph{Operations Research}, 13:\penalty0 388--399, 1965.
+
+\bibitem[Ishikawa(2003)]{Ishikawa:PAMI03}
+H.~Ishikawa.
+\newblock Exact optimization for {M}arkov random fields with convex priors.
+\newblock \emph{{IEEE} Trans.~on Pattern Analysis and Machine Intelligence
+  ({PAMI})}, 25:\penalty0 1333--1336, 2003.
+
+\bibitem[Ishikawa(2009)]{Ishikawa:CVPR09}
+H.~Ishikawa.
+\newblock Higher-order clique reduction in binary graph cut.
+\newblock In \emph{Proc.~of the {IEEE} Conference on Computer Vision and
+  Pattern Recognition ({CVPR})}, 2009.
+
+\bibitem[Joachims et~al.(2009)Joachims, Finley, and Yu]{Joachims:ML09}
+T.~Joachims, T.~Finley, and C.-N.~J. Yu.
+\newblock Cutting-plane training of structural {SVM}s.
+\newblock \emph{Machine Learning}, 77:\penalty0 27--59, 2009.
+
+\bibitem[Kohli and Kumar(2010)]{Kohli:CVPR10}
+P.~Kohli and M.~P. Kumar.
+\newblock Energy minimization for linear envelope {MRF}s.
+\newblock In \emph{Proc.~of the {IEEE} Conference on Computer Vision and
+  Pattern Recognition ({CVPR})}, 2010.
+
+\bibitem[Kohli and Torr(2007)]{Kohli:PAMI07}
+P.~Kohli and P.~H.~S. Torr.
+\newblock Dynamic graph cuts for efficient inference in markov random fields.
+\newblock \emph{{IEEE} Trans.~on Pattern Analysis and Machine Intelligence
+  ({PAMI})}, 2007.
+
+\bibitem[Kohli et~al.(2007)Kohli, Kumar, and Torr]{Kohli:CVPR07}
+P.~Kohli, M.~P. Kumar, and P.~H.~S. Torr.
+\newblock P3 \& beyond: {S}olving energies with higher order cliques.
+\newblock In \emph{Proc.~of the {IEEE} Conference on Computer Vision and
+  Pattern Recognition ({CVPR})}, 2007.
+
+\bibitem[Kohli et~al.(2008)Kohli, Ladicky, and Torr]{Kohli:TR08}
+P.~Kohli, L.~Ladicky, and P.~H.~S. Torr.
+\newblock Graph cuts for minimizing higher order potentials.
+\newblock Technical report, Microsoft Research, 2008.
+
+\bibitem[Koller and Friedman(2009)]{Koller:2009}
+D.~Koller and N.~Friedman.
+\newblock \emph{Probabilistic Graphical Models: Principles and Techniques}.
+\newblock MIT Press, 2009.
+
+\bibitem[Kolmogorov(2012)]{Kolmogorov:DAM12}
+V.~Kolmogorov.
+\newblock Minimizing a sum of submodular functions.
+\newblock \emph{Discrete Applied Mathematics}, 160\penalty0 (14):\penalty0
+  2246--2258, Oct 2012.
+
+\bibitem[Kolmogorov and Zabih(2004)]{Kolmogorov:PAMI04}
+V.~Kolmogorov and R.~Zabih.
+\newblock What energy functions can be minimized via graph cuts?
+\newblock \emph{{IEEE} Trans.~on Pattern Analysis and Machine Intelligence
+  ({PAMI})}, 26:\penalty0 65--81, 2004.
+
+\bibitem[Komodakis(2011)]{Komodakis:CVPR2011}
+N.~Komodakis.
+\newblock Efficient training for pairwise or higher order crfs via dual
+  decomposition.
+\newblock In \emph{Proc.~of the {IEEE} Conference on Computer Vision and
+  Pattern Recognition ({CVPR})}, 2011.
+
+\bibitem[Ladicky et~al.(2009)Ladicky, Russell, Kohli, and Torr]{Ladicky:ICCV09}
+L.~Ladicky, C.~Russell, P.~Kohli, and P.~H. Torr.
+\newblock Associative hierarchical {CRF}s for object class image segmentation.
+\newblock In \emph{Proc.~of the International Conference on Computer Vision
+  ({ICCV})}, 2009.
+
+\bibitem[Lempitsky et~al.(2009)Lempitsky, Kohli, Rother, and
+  Sharp]{Lempitsky:ICCV09}
+V.~Lempitsky, P.~Kohli, C.~Rother, and T.~Sharp.
+\newblock Image segmentation with a bounding box prior.
+\newblock In \emph{Proc.~of the International Conference on Computer Vision
+  ({ICCV})}, 2009.
+
+\bibitem[Nowozin and Lampert(2009)]{Nowozin:CVPR09}
+S.~Nowozin and C.~H. Lampert.
+\newblock Global connectivity potentials for random field models.
+\newblock In \emph{Proc.~of the {IEEE} Conference on Computer Vision and
+  Pattern Recognition ({CVPR})}, 2009.
+
+\bibitem[Nowozin and Lampert(2011)]{Nowozin:2011}
+S.~Nowozin and C.~H. Lampert.
+\newblock Structured learning and prediction in computer vision.
+\newblock \emph{Foundations and Trends in Computer Graphics and Vision},
+  6\penalty0 (3--4):\penalty0 185--365, 2011.
+
+\bibitem[Orlin(2009)]{Orlin:MP2009}
+J.~B. Orlin.
+\newblock A faster strongly polynomial time algorithm for submodular function
+  minimization.
+\newblock \emph{Mathematical Programming}, 118\penalty0 (2):\penalty0 237--251,
+  2009.
+
+\bibitem[Park and Gould(2012)]{Park:ECCV2012}
+K.~Park and S.~Gould.
+\newblock On learning higher-order consistency potentials for multi-class pixel
+  labeling.
+\newblock In \emph{Proc.~of the European Conference on Computer Vision
+  ({ECCV})}, 2012.
+
+\bibitem[Pletscher and Kohli(2012)]{Pletscher:AISTATS12}
+P.~Pletscher and P.~Kohli.
+\newblock Learning low-order models for enforcing high-order statistics.
+\newblock In \emph{Proc.~of the International Conference on Artificial
+  Intelligence and Statistics ({AISTATS})}, 2012.
+
+\bibitem[Rother et~al.(2004)Rother, Kolmogorov, and Blake]{Rother:SIGGRAPH04}
+C.~Rother, V.~Kolmogorov, and A.~Blake.
+\newblock {G}rab{C}ut: Interactive foreground extraction using iterated graph
+  cuts.
+\newblock In \emph{Proc.~of the Intl. Conf. on Computer Graphics and
+  Interactive Techniques ({SIGGRAPH})}, 2004.
+
+\bibitem[Rother et~al.(2009)Rother, Kohli, Feng, and Jia]{Rother:CVPR09}
+C.~Rother, P.~Kohli, W.~Feng, and J.~Jia.
+\newblock Minimizing sparse higher order energy functions of discrete
+  variables.
+\newblock In \emph{Proc.~of the {IEEE} Conference on Computer Vision and
+  Pattern Recognition ({CVPR})}, 2009.
+
+\bibitem[Shotton et~al.(2006)Shotton, Winn, Rother, and
+  Criminisi]{Shotton:ECCV06}
+J.~Shotton, J.~Winn, C.~Rother, and A.~Criminisi.
+\newblock Texton{B}oost: Joint appearance, shape and context modeling for
+  multi-class object recognition and segmentation.
+\newblock In \emph{Proc.~of the European Conference on Computer Vision
+  ({ECCV})}, 2006.
+
+\bibitem[Szummer et~al.(2008)Szummer, Kohli, and Hoiem]{Szummer:ECCV08}
+M.~Szummer, P.~Kohli, and D.~Hoiem.
+\newblock Learning {CRF}s using graph-cuts.
+\newblock In \emph{Proc.~of the European Conference on Computer Vision
+  ({ECCV})}, 2008.
+
+\bibitem[Taskar et~al.(2005)Taskar, Chatalbashev, Koller, and
+  Guestrin]{Taskar:ICML05}
+B.~Taskar, V.~Chatalbashev, D.~Koller, and C.~Guestrin.
+\newblock Learning structured prediction models: A large margin approach.
+\newblock In \emph{Proc.~of the International Conference on Machine Learning
+  ({ICML})}, 2005.
+
+\bibitem[Tsochantaridis et~al.(2004)Tsochantaridis, Hofmann, Joachims, and
+  Altun]{Tsochantaridis:ICML04}
+I.~Tsochantaridis, T.~Hofmann, T.~Joachims, and Y.~Altun.
+\newblock Support vector learning for interdependent and structured output
+  spaces.
+\newblock In \emph{Proc.~of the International Conference on Machine Learning
+  ({ICML})}, 2004.
+
+\bibitem[Tsochantaridis et~al.(2005)Tsochantaridis, Joachims, Hofmann, and
+  Altun]{Tsochantaridis:JMLR05}
+I.~Tsochantaridis, T.~Joachims, T.~Hofmann, and Y.~Altun.
+\newblock Large margin methods for structured and interdependent output
+  variables.
+\newblock \emph{Journal of Machine Learning Research ({JMLR})}, 6:\penalty0
+  1453--1484, 2005.
+
+\bibitem[Yu and Joachims(2009)]{Yu:ICML09}
+C.-N. Yu and T.~Joachims.
+\newblock Learning structural {SVM}s with latent variables.
+\newblock In \emph{Proc.~of the International Conference on Machine Learning
+  ({ICML})}, 2009.
+
+\end{thebibliography}
