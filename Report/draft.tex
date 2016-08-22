@@ -13,7 +13,18 @@
 \usepackage{graphicx} % Add pictures to your document
 \usepackage{listings} % Source code formatting and highlighting
 
+% Algorithm Packages
+% ---
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\makeatletter
+
+% Defines
+% ---
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
 \DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
 
 
 % Title
@@ -64,11 +75,12 @@
 		\Delta((\mathbf{y}_i,\mathbf{h}^*_i(w)),(\mathbf{\hat{y}}_i(w),\mathbf{\hat{h}}_i(w))) = \Delta(\mathbf{y}_i,\mathbf{\hat{y}}_i(w),\mathbf{\hat{h}}_i(w))
 		$$
 		Thus the upper bound used in structural SVMs can be written as:
-		\begin{align*}
+		\begin{align}
+			\label{eq:upperbound_SSVM}
 			\Delta((\mathbf{y}_i,\mathbf{h}^*_i(w)),(\mathbf{\hat{y}}_i(w),\mathbf{\hat{h}}_i(w)))
 			&\leq \bigg(\max_{(\mathbf{\hat{y}} \times \mathbf{\hat{h}}) \in \mathcal{Y} \times \mathcal{H}} [w\cdot\Psi(\mathbf{x}_i,\mathbf{\hat{y}},\mathbf{\hat{h}}) + \Delta(\mathbf{y}_i,\mathbf{\hat{y}},\mathbf{\hat{h}})]\bigg)\\
 			&-\max_{\mathbf{h} \in \mathcal{H}} w \cdot \Psi(\mathbf{x}_i,\mathbf{y}_i,\mathbf{h})
-		\end{align*}
+		\end{align}
 		Hence the optimization problem for Structural SVMs with latent variables becomes
 		\begin{align*}
 			\min_w\bigg(\frac{1}{2}\|w\|^2+
@@ -114,13 +126,14 @@
 		
 		\section{Optimizing Lower Linear Envelope Using Latent Structural SVMs}
 		To optimize the energy function using latent structral SVMs, it first requires us write the equation (5) into a linear combination of weights and feature vector. In order to help with the formulation, we first define $k^* = \argmax_{k=1,\dots,K-1} \big[\big[z_{k}\big]\big]$. We also notice that the equation (5) can be rewrite as an inner product of two vectors ($b_1=0$ according to equation  (4)):
-		\begin{align*}
+		\begin{align}
+		\label{eq:originalenergy}
 		E^c(y_c,z)&=a_1W_c(y_c)+b_1+\sum_{k=1}^{K-1}z_k((a_{k+1}-a_k)W_c(y_c)+b_{k+1}-b_k)\\
 		&=a_1W_c(y_c)+\sum_{k=1}^{K-1}(a_{k+1}-a_k)z_kW_c(y_c)+\sum_{k=1}^{K-1}(b_{k+1}-b_k)z_k
-		\end{align*}
-		One thing to notice is that $z_{k^*+1}=0$. From equation (6) we know that $z_k = 1$ from $k=1$ to $k=k^*$ and all variables $z_k$ after $k^*$ are $0$s. We can reparameterized the energy function as $E^c(y_c,z)=\mathbf{w}\mathbf{\phi}$ where:
+		\end{align}
+		One thing to notice is that $z_{k^*+1}=0$. From equation (6) we know that $z_k = 1$ from $k=1$ to $k=k^*$ and all variables $z_k$ after $k^*$ are $0$s. We can reparameterized the energy function as $E^c(y_c,z)=\mathbf{\theta}\mathbf{\phi}$ where:
 		\begin{equation}
-			w_i = \left\{
+			\theta_i = \left\{
 			\begin{aligned}
 				& a_1	& \text{for} \ i=1\\
 				& a_i-a_{i-1} & \text{for}\ 1< i \leq K\\
@@ -138,15 +151,78 @@
 		\end{aligned}
 		\right.
 		\end{equation}
-		Thus our inference problem becomes:
+		However, notice that by using energy function labels are infered by minimization. Thus our inference problem becomes:
 		$$
-		(\mathbf{\hat{y}}_i(w),\mathbf{\hat{z}}_i(w))=\argmax_{(\mathbf{y} \times \mathbf{z}) \in \mathcal{Y} \times \mathcal{Z}} w\cdot\Psi(\mathbf{y},\mathbf{z})
+		(\mathbf{\hat{y}}_i(\theta),\mathbf{\hat{z}}_i(\theta))=\argmin_{(\mathbf{y} \times \mathbf{z}) \in \mathcal{Y} \times \mathcal{Z}} \theta\cdot\Psi(\mathbf{y},\mathbf{z})
 		$$
 		$$
-		\mathbf{z}^*_i(w) = \argmax_{\mathbf{z} \in \mathcal{Z}} w \cdot \Psi(\mathbf{y}_i,\mathbf{z})
+		\mathbf{z}^*_i(\theta) = \argmin_{\mathbf{z} \in \mathcal{Z}} \theta \cdot \Psi(\mathbf{y}_i,\mathbf{z})
 		$$
-		We can perform the graph-cuts algorithm proposed by Gould\cite{gouldlearning} on both equations. For the later one we simply use the ground-truth labels $y_i$ as function input. Together with linear constraints (2) and (3), we can optimize the energy function using latent SVMs.
-
+		We can perform the graph-cuts algorithm proposed by Gould\cite{gouldlearning} on both equations. For the later one we simply use the ground-truth labels $y_i$ as function input. Thus the term $((a_{k+1}-a_k)W_c(y_c)+b_{k+1}-b_k)$ in equation~\ref{eq:originalenergy} becomes constant, so we can infer latent variable $z$ explicitly by:
+		\begin{align}
+		\label{eq:inferlatent}
+		z_k^c &=
+		\begin{cases}
+		0 & \text{if $((a_{k+1}-a_k)W_c(y_c)+b_{k+1}-b_k)>=0$} \\
+		1 & \text{otherwise}.
+		\end{cases}
+		\end{align}
+		
+		Therefore, the upperbound of equation~\ref{eq:upperbound_SSVM} under this formulation becomes:
+		\begin{align}
+		\label{eq:upperbound_LSSVM}
+		\Delta((\mathbf{y}_i,\mathbf{z}^*_i(w)),(\mathbf{\hat{y}}_i(w),\mathbf{\hat{z}}_i(w)))
+		&\leq \bigg(\min_{(\mathbf{\hat{y}} \times \mathbf{\hat{z}}) \in \mathcal{Y} \times \mathcal{Z}} [w\cdot\Psi(\mathbf{x}_i,\mathbf{\hat{y}},\mathbf{\hat{z}}) - \Delta(\mathbf{y}_i,\mathbf{\hat{y}},\mathbf{\hat{z}})]\bigg)\\
+		&-\min_{\mathbf{z} \in \mathcal{Z}} w \cdot \Psi(\mathbf{x}_i,\mathbf{y}_i,\mathbf{z})
+		\end{align}
+		Therefore, the energy function (higher order features together with unary and pairwise features) are:
+			\begin{equation}
+			E^{all}(y,z) = \begin{bmatrix}
+			\theta^h\\
+			\theta^{unary}\\
+			\theta^{pairwise}
+			\end{bmatrix}^T 
+			\cdot \begin{bmatrix}
+			\phi^h\\
+			\phi^{unary}\\
+			\phi^{pairwise}
+			\end{bmatrix}=\theta^{all\text{T}}\cdot\phi^{all}
+			\end{equation}
+		Together with linear constraints (2) and (3), we can optimize the energy function using latent SVMs:
+		\begin{align}
+		\label{eq:qpobject}
+		\text{minimize}    \frac{1}{2}||\theta||^2 + \frac{C}{T}\sum_{t=1}^T{\xi_t} \\
+		\text{subject to}\\
+				\bigg(\min_{(\mathbf{\hat{y}} \times \mathbf{\hat{h}}) \in \mathcal{Y} \times \mathcal{H}} [w\cdot\Psi(\mathbf{x}_i,\mathbf{\hat{y}},\mathbf{\hat{h}}) - \Delta(\mathbf{y}_i,\mathbf{\hat{y}},\mathbf{\hat{h}})]\bigg)
+				&-\min_{\mathbf{h} \in \mathcal{H}} w \cdot \Psi(\mathbf{x}_i,\mathbf{y}_i,\mathbf{h})
+				+\xi_i\\
+				&\geq \Delta((\mathbf{y}_i,\mathbf{h}^*_i(w)),(\mathbf{\hat{y}}_i(w),\mathbf{\hat{h}}_i(w)))
+		\end{align}
+		
+	\section{Algorithm}
+	
+		\begin{algorithm}
+							\caption{MRF-LSSVM (CCCP-Cutting Plane)}\label{euclid}
+							\begin{algorithmic}[1]
+								\State Initialize $\theta=0$
+								\State \emph{Outer Loop}:
+								\While{t $\leq$ MaxOuterIteration}
+								\State Infer latent variable $z^*$ using equation~\ref{eq:inferlatent}
+								\State $v_t = \phi(y, z^*)$
+								\State \emph{Innter Loop}:
+								\State $A \gets$ convex constraints
+								\State $b \gets$ convex constraints
+								\State $\Delta_{unaryloss} \gets y - \bar{y}$
+								\While{t $\leq$ MaxInnerIteration}
+								\State $y_{loss}, z_{loss} \gets \argmin_{(\mathbf{y} \times \mathbf{z}) \in \mathcal{Y} \times \mathcal{Z}}  \theta \cdot \Psi(\mathbf{y} - \Delta_{unaryloss},z)$
+								\State $\phi_{loss} \gets \phi(x,y_{loss}, z_{loss})$
+								\State $A \cup v_t - \phi_{loss}$
+								\State $b \cup \Delta(y,y_{loss})$
+								\EndWhile
+								\EndWhile
+							\end{algorithmic}
+		\end{algorithm}
+		
 	\renewcommand\refname{Bibliography}
 	\bibliographystyle{ieeetr}
 	\bibliography{draft}

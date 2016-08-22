@@ -1,0 +1,18 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Related Work}{}% 2
+\BOOKMARK [1][-]{section.3}{Lower Linear Envelope MRFs}{}% 3
+\BOOKMARK [2][-]{subsection.3.1}{Higher-order MRFs}{section.3}% 4
+\BOOKMARK [2][-]{subsection.3.2}{Exact Inference}{section.3}% 5
+\BOOKMARK [2][-]{subsection.3.3}{Relationship to Binary MRFs}{section.3}% 6
+\BOOKMARK [1][-]{section.4}{Learning the Lower Linear Envelope}{}% 7
+\BOOKMARK [2][-]{subsection.4.1}{Max-margin Learning}{section.4}% 8
+\BOOKMARK [2][-]{subsection.4.2}{Transforming Between Representations}{section.4}% 9
+\BOOKMARK [2][-]{subsection.4.3}{Alternative QP Formulations}{section.4}% 10
+\BOOKMARK [1][-]{section.5}{Experimental Results}{}% 11
+\BOOKMARK [2][-]{subsection.5.1}{Synthetic Checkerboard}{section.5}% 12
+\BOOKMARK [2][-]{subsection.5.2}{Interactive Figure-Ground Segmentation}{section.5}% 13
+\BOOKMARK [2][-]{subsection.5.3}{Weizmann Horses}{section.5}% 14
+\BOOKMARK [1][-]{section.6}{Discussion}{}% 15
+\BOOKMARK [1][-]{IEEEbiography.0}{Biographies}{}% 16
+\BOOKMARK [2][-]{IEEEbiography.1}{Stephen Gould}{IEEEbiography.0}% 17
+\BOOKMARK [1][-]{section*.13}{Appendix}{}% 18

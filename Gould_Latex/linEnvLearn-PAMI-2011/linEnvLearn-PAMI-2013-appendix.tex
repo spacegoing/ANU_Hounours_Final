@@ -1,0 +1,228 @@
+% LinEnvLearn-PAMI-2013-appendix
+% Stephen Gould <stephen.gould@anu.edu.au>
+%
+% Contributions over ICML paper:
+% 1. re-introduce per-variable weight w_i
+% 2. lemma that b_1 = 0 without loss of generality
+% 3. lemma that constraints on z_k are not required
+% 4. proof for polynomial time max-margin convergence
+% 5. more synthetic experiments comparing different formulations
+% 6. Weizmann horses experiments
+
+\documentclass[10pt,journal,letterpaper,compsoc]{IEEEtran}
+
+% For figures
+\ifCLASSINFOpdf
+\usepackage[pdftex]{graphicx}
+\DeclareGraphicsExtensions{.jpg,.png}
+\else
+\usepackage[dvips]{graphicx}
+\DeclareGraphicsExtensions{.eps}
+\fi
+
+% For citations
+%% \ifCLASSOPTIONcompsoc
+%% \usepackage[nocompress]{cite}
+%% \else
+%% \usepackage{cite}
+%% \fi
+
+\usepackage[sort,numbers]{natbib}
+\renewcommand{\citename}{\citet}
+\renewcommand{\cite}{\citep}
+\usepackage{natbibspacing}
+
+% For maths
+\usepackage[cmex10]{amsmath}
+\usepackage{amssymb,amsthm}
+
+% For algorithms
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+% For Hyperlinks
+\usepackage{hyperref}
+% fix problem between hyperref and algorithmic
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+% For captions
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage[font=footnotesize]{subfig}
+
+% My macros
+\usepackage{sg-macros}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{obs}[thm]{Observation}
+\newtheorem{defn}[thm]{Definition}
+
+\newcommand{\mmqp}[3]{\textrm{\sc MaxMarginQP}\!\left(\{\by_t, #1\}_{t=1}^{T}, #2, #3\right)}
+
+\numberwithin{equation}{section}
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+\begin{document}
+
+\title{Appendix for Learning Weighted Lower Linear Envelope Potentials
+  in Binary Markov Random Fields}
+
+\author{Stephen~Gould,~\IEEEmembership{Member,~IEEE}%
+\IEEEcompsocitemizethanks{\IEEEcompsocthanksitem S.~Gould is with the Research
+School of Computer Science, Australian National University, ACT 0200, Australia.\protect\\
+E-mail: stephen.gould@anu.edu.au}%
+\thanks{}}
+
+% Appendix ------------------------------------------------------------------------
+\appendix
+
+In this section we show that the polynomial time cutting-plane method
+of Tsochantaridis et al.~[34] can be extended to handle linear
+inequality constraints on the parameters. Our argument follows their
+$\text{SVM}_1^{\Delta m}$ formulation of the max-margin structured
+prediction problem.
+
+Let us begin by writing out the Lagrangian for the quadratic program
+$\mmqp{\Y_t}{\bG}{\bh}$  defined in Equation 8.
+Introducing dual variables $\balpha$, $\bbeta$ and $\bgamma$, we have
+%
+\begin{multline}
+  \Ell(\btheta, \bxi, \balpha, \bbeta, \bgamma) =
+  \frac{1}{2} \|\btheta\|^2 + \frac{C}{T} \sum_{t=1}^{T} \xi_t\\
+  {}- \sum_{t=1}^{T} \sum_{\by \in \Y_t} \alpha_{t, \by} \left(\btheta^T \delta\phi_t(\by) + \xi_t - \Delta(\by, \by_t)\right)\\
+  {}- \bbeta^T \left( \bG \btheta - \bh\right) - \sum_{t=1}^T \gamma_t \xi_t
+  \label{eqn:lagrangian}
+\end{multline}
+%
+subject to $\balpha \succeq \zeros$, $\bbeta \succeq \zeros$, and
+$\bgamma \succeq \zeros$ where ``$\ba \succeq \bb$'' denotes
+componentwise inequality between the vectors $\ba$ and $\bb$.
+
+Setting $\frac{\partial \Ell}{\partial \xi_i} = \frac{C}{T} -
+\sum_{\by \in \Y_t} \alpha_{t,\by} - \gamma_t = 0$ and substituting
+for $\gamma_t$ we can re-write \eqnref{eqn:lagrangian} as
+%
+\begin{multline}
+  \Ell(\btheta, \balpha, \bbeta) =
+  \frac{1}{2} \|\btheta\|^2 \\
+  {}- \sum_{t=1}^{T} \sum_{\by \in \Y_t} \alpha_{t, \by} \left(\btheta^T \delta\phi_t(\by) - \Delta(\by, \by_t)\right)\\
+  {}- \bbeta^T \left( \bG \btheta - \bh\right)
+  \label{eqn:lagrangian2}
+\end{multline}
+%
+subject to constraints $\sum_{\by \in \Y_t} \alpha_{t,\by} \leq
+\frac{C}{T}$ for all $t = 1, \ldots, T$.
+
+Now
+\begin{align}
+\nabla_{\btheta} \Ell 
+&= \btheta - \sum_{t=1}^T \sum_{\by \in \Y_t} \alpha_{t,\by} \delta\phi_t(\by) - \bG^T\bbeta.
+\end{align}
+%
+Eliminating $\btheta$ by setting $\nabla_{\btheta} \Ell = 0$ we have
+%
+\begin{multline}
+  \Ell(\balpha, \bbeta) =
+  -\frac{1}{2} \sum_{\substack{t=1,\\\by \in \Y_t}}^{T} \sum_{\substack{t'=1,\\\by' \in \Y_t'}}^{T}
+  \alpha_{t, \by} \alpha_{t', \by'} \delta\phi_t(\by)^T \delta\phi_{t'}(\by') \\
+  - \sum_{\substack{t=1,\\\by \in \Y_t}}^{T} \alpha_{t, \by} \delta\phi_t(\by)^T \bG^T \bbeta
+  -\frac{1}{2} \bbeta^T \bG \bG^T \bbeta \\
+  + \sum_{\substack{t=1,\\\by \in \Y_t}}^{T} \alpha_{t, \by} \Delta(\by, \by_t) + \bh^T \bbeta\
+  \label{eqn:lagrangian3}
+\end{multline}
+%
+where we have written the double summations over $t$ and $\by$ more
+succinctly. This is a quadratic equation that can be written more
+compactly as
+%
+\begin{align}
+  \Ell(\balpha, \bbeta) &=
+  -\frac{1}{2} \begin{bmatrix}\balpha \\ \bbeta \end{bmatrix}^T 
+  \!\! \begin{bmatrix}\bJ_{\alpha\alpha} & \bJ_{\alpha\beta} \\ \bJ_{\beta\alpha} & \bG\bG^T \end{bmatrix}
+  \! \begin{bmatrix}\balpha \\ \bbeta \end{bmatrix} +
+  \begin{bmatrix} \bDelta \\ \bh \end{bmatrix}^T \!\! \begin{bmatrix}\balpha \\ \bbeta \end{bmatrix}
+  \label{eqn:lagrangian_matrix}
+\end{align}
+%
+where $\balpha$ is a vector containing the $\alpha_{t,\by}$, $\bDelta$
+is a vector with entries $\Delta(\by, \by_t)$ corresponding to the
+entries in $\balpha$.
+
+The dual optimization problem to $\mmqp{\Y_t}{\bG}{\bh}$ is to
+maximize $\Ell(\balpha, \bbeta)$ subject to constraints $\balpha
+\succeq \zeros$, $\bbeta \succeq \zeros$, and $\sum_{\by \in \Y_t}
+\alpha_{t,\by} \leq \frac{C}{T}$ for $t = 1, \ldots, T$.
+
+Lemmas 10, 11, 12, and 13 from Tsochantaridis et al.~[34] apply
+directly to \eqnref{eqn:lagrangian3} on the joint variables $(\balpha,
+\bbeta)$. Specifically, we have the following bounds
+%
+\begin{multline}
+  \max_{0 < \lambda \leq D} \{\Ell(\hat{\balpha} + \lambda \eta, \hat{\bbeta})\} 
+  - \Ell(\hat{\balpha}, \hat{\bbeta}) 
+  \\
+  \geq \frac{1}{2} \min \left\{D, 
+  \frac{\eta^T \nabla_{\alpha} \Ell(\hat{\balpha}, \hat{\bbeta})}{\eta^T \bJ_{\alpha\alpha} \eta}
+  \right\} \eta^T \nabla_{\alpha} \Ell(\hat{\balpha}, \hat{\bbeta})
+\end{multline}
+%
+and
+%
+\begin{multline}
+  \max_{0 < \lambda \leq D} \{\Ell(\hat{\balpha} + \lambda \be_{t,\by}, \hat{\bbeta})\} 
+  - \Ell(\hat{\balpha}, \hat{\bbeta}) 
+  \\
+  \geq \frac{1}{2} \min \left\{D, 
+  \frac{\frac{\partial \Ell}{\partial \alpha_{t,\by}}(\hat{\balpha}, \hat{\bbeta})}{\|\delta \phi_t(\by)\|^2} 
+  \right\}
+  \frac{\partial \Ell}{\partial \alpha_{t,\by}}(\hat{\balpha}, \hat{\bbeta})
+\end{multline}
+%
+from Lemmas 12 and 13, respectively.
+
+%\algref{alg:learning}
+
+Now for a given pair of primal parameters $(\hat{\btheta},
+\hat{\bxi})$ and corresponding dual variables $(\hat{\balpha},
+\hat{\bbeta})$, consider the adding an example $\by_t^\star$ to the
+constraint set $\A_t$ in Line 9 of Algorithm~1. Fixing $\bbeta =
+\hat{\bbeta} \geq \zeros$ we can write
+%
+\begin{multline}
+  \Ell(\balpha; \hat{\bbeta}) =
+  -\frac{1}{2} \sum_{\substack{t=1,\\\by \in \Y_t}}^{T} \sum_{\substack{t'=1,\\\by' \in \Y_t'}}^{T}
+  \alpha_{t, \by} \alpha_{t', \by'} \delta\phi_t(\by)^T \delta\phi_{t'}(\by') \\
+  + \sum_{\substack{t=1,\\\by \in \Y_t}}^{T} \alpha_{t, \by} \left(\Delta(\by, \by_t) - \delta\phi_t(\by)^T \bG^T \hat{\bbeta} \right) + \kappa(\hat{\bbeta})
+\end{multline}
+%
+where $\kappa$ is independent of $\balpha$. Then recognizing that
+%
+\begin{align}
+  \hat{\btheta} &= \sum_{\substack{t=1,\\\by \in \Y_t}}^{T} \hat{\alpha}_{t, \by} \delta\phi_t(\by)^T + \bG^T \hat{\bbeta}
+\end{align}
+%
+and
+%
+\begin{align}
+  \Delta(\by^\star_t, \by_t) - \hat{\btheta}^T\delta\phi_t(\by_t^\star)
+  \,>\, \hat{\xi}_t + \epsilon \,\geq\, \epsilon
+\end{align}
+% 
+we arrive at the same bound for improvement in $\Ell$ as
+[Proposition 17, 34] for $\text{SVM}_1^{\Delta
+  m}$.
+
+Finally, noticing that for the case of $\bh = \zeros$ we have as a
+primal feasible point $\btheta = \zeros$.  Therefore we can upper
+bound $\Ell(\balpha, \bbeta)$ by $C \bar{\Delta}$ where $\bar{\Delta}
+= \max_{t,\by \in \Y_t} \Delta(\by, \by_t)$ and so Theorem 18, which
+bounds the number of iterations of the dual optimization algorithm of
+Tsochantaridis et al.~[34], applies. We conclude that for
+$\epsilon > 0$ our algorithm will converge in a polynomial number of
+iterations.
+
+\end{document}

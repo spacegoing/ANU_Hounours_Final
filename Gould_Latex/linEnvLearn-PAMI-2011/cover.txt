@@ -1,0 +1,38 @@
+COVER LETTER FOR LEARNING WEIGHTED LOWER LINEAR ENVELOPE POTENTIALS IN
+                BINARY PAIRWISE MARKOV RANDOM FIELDS
+
+Dear Editors,
+
+Please accept our paper "Learning Weighted Lower Linear Envelope
+Potentials in Binary Markov Random Fields" for review in the TPAMI
+special issue on "Higher Order Graphical Models in Computer Vision:
+Modelling, Inference, and Learning." Our paper is an extension of a
+previous ICML conference paper. We have made the following additional
+contributions:
+
+  1. We have introduced a per-variable weight w_i and shown explicitly
+  how to define models, perform inference, and learn parameters on
+  lower linear envelope potentials that include these weights.
+
+  2. We have added Lemma 3.1 that states that we can set b_1 = 0
+  without loss of generality.
+
+  3. We have added Lemma 3.2 that shows that the constraints on z_k
+  introduced in our previous conference paper are not required.
+
+  4. The appendix provides a proof that the max-margin learning
+  algorithm with \epslion > 0 will converge in a polynomial number of
+  iterations.
+
+  5. Experiments on the synthetic data have been added comparing the
+  different formulations of the problem.
+
+  6. Experiments on the Weizmann horse dataset have been added.
+
+  7. Much of the text has been expanded and additional technical
+  details added.
+
+Kind Regards,
+
+Stephen Gould
+28 March 2013
